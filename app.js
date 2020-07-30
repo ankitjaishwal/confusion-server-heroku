@@ -24,7 +24,7 @@ var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
 const url = config.mongoUrl;
-const connect = mongoose.connect(url, { useNewUrlParser: true , useUnifiedTopology: true });
+const connect = mongoose.connect(process.env.MONGODB_URI || url, { useNewUrlParser: true , useUnifiedTopology: true });
 
 connect.then((db) => {
     console.log("Connected correctly to server");
@@ -32,7 +32,7 @@ connect.then((db) => {
 
 var app = express();
 
-app.all('*', (req, res, next) => {
+/*app.all('*', (req, res, next) => {
   if (req.secure) {
     return next();
   }
@@ -40,7 +40,7 @@ app.all('*', (req, res, next) => {
     res.redirect(307, 'https://' + req.hostname + ':' + app.get('secPort') + req.url);
   }
 });
-
+*/
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
